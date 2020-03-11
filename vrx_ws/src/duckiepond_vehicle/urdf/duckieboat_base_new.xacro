@@ -1,0 +1,579 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="duckieboat">
+  <xacro:include filename="propeties_duckieboat.urdf.xacro"/>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="cameralink">
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  <gazebo reference="gpslink">
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  <gazebo reference="boxlink">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="antenalink">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="skiplatelink">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="skillink">
+    <material>Gazebo/White</material>
+  </gazebo>
+  <gazebo reference="ringlink">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="screwlink">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00201556619553345 -0.115774711383391 0.0452928535049344"
+        rpy="0 0 0" />
+      <mass
+        value="7.3955685240054" />
+      <inertia
+        ixx="0.0930686648809486"
+        ixy="8.49971556491276E-05"
+        ixz="-0.00444766572354564"
+        iyy="0.141452706715672"
+        iyz="-0.00890585483017133"
+        izz="0.118669808193289" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 .25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/baselink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/baselink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="cameralink">
+    <inertial>
+      <origin
+        xyz="0.00437816278028319 -2.13891714974872E-05 -0.00728569229905018"
+        rpy="0 0 0" />
+      <mass
+        value="0.00562870839119988" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/cameralink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/cameralink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="camerajoint"
+    type="fixed">
+    <origin
+      xyz="0.489530613957206 0 0.290251530663678"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="cameralink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="gpslink">
+    <inertial>
+      <origin
+        xyz="1.01683827635757E-07 -1.01683827691268E-07 0.00875648643174259"
+        rpy="0 0 0" />
+      <mass
+        value="0.028118264575905" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/gpslink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/gpslink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gpsjoint"
+    type="fixed">
+    <origin
+      xyz="-0.2175 -0.2395 0.255"
+      rpy="4.16333634234434E-17 1.11022302462516E-16 6.93889390390723E-17" />
+    <parent
+      link="base_link" />
+    <child
+      link="gpslink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="boxlink">
+    <inertial>
+      <origin
+        xyz="0.0308158977062125 -0.000840284840662907 0.0824275993877513"
+        rpy="0 0 0" />
+      <mass
+        value="0.967626833312939" />
+      <inertia
+        ixx="6.24394504813381E-05"
+        ixy="-5.31326643118662E-05"
+        ixz="1.94006601550366E-05"
+        iyy="5.85864783515465E-05"
+        iyz="2.01168382965867E-05"
+        izz="0.00010633515628306" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/boxlink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/boxlink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="boxjoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="boxlink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="antenalink">
+    <inertial>
+      <origin
+        xyz="-0.2975 -0.243825 0.307075130894649"
+        rpy="0 0 0" />
+      <mass
+        value="0.157974515346865" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/antenalink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/antenalink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="antenajoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="antenalink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="skiplatelink">
+    <inertial>
+      <origin
+        xyz="-0.0266666666666668 1.4978424328395E-16 -0.0272706012437862"
+        rpy="0 0 0" />
+      <mass
+        value="0.880192610943105" />
+      <inertia
+        ixx="0.0878815180133618"
+        ixy="3.98986399474666E-17"
+        ixz="-6.22971440518404E-19"
+        iyy="0.061339645064835"
+        iyz="-2.34800756124921E-18"
+        izz="0.149221163078197" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/skiplatelink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/skiplatelink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="skiplatejoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="skiplatelink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="skillink">
+    <inertial>
+      <origin
+        xyz="0.191363636363636 1.02805807885689E-16 -0.142029682566655"
+        rpy="0 0 0" />
+      <mass
+        value="86.3937979737193" />
+      <inertia
+        ixx="9.1253449109741"
+        ixy="3.11728247009522E-15"
+        ixz="5.32442888086167E-31"
+        iyy="1.33110722021542E-30"
+        iyz="-1.55864123504761E-15"
+        izz="9.1253449109741" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 .25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/skillink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 .25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/skillink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="skijoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="skiplatelink" />
+    <child
+      link="skillink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ringlink">
+    <inertial>
+      <origin
+        xyz="-0.0136666666666666 -5.80410666401223E-17 -0.133311847951943"
+        rpy="0 0 0" />
+      <mass
+        value="0.033623846415063" />
+      <inertia
+        ixx="0.00355151877759103"
+        ixy="5.6920614055489E-19"
+        ixz="7.70397224226628E-20"
+        iyy="0.00290154367450731"
+        iyz="6.90863652521693E-20"
+        izz="0.00645306245209834" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/ringlink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/ringlink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ringjoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="skiplatelink" />
+    <child
+      link="ringlink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="screwlink">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 1.21479519083676E-16 -0.0495959225003242"
+        rpy="0 0 0" />
+      <mass
+        value="0.314159265358979" />
+      <inertia
+        ixx="0.0345103952996839"
+        ixy="2.73943004947761E-18"
+        ixz="-1.21009747292311E-34"
+        iyy="7.63874029782712E-34"
+        iyz="6.25818071647903E-19"
+        izz="0.0345103952996839" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/screwlink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://duckiepond_vehicle/mesh/screwlink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="screwjoint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="skiplatelink" />
+    <child
+      link="screwlink" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <!-- right motor -->
+  <!-- <link name="right_motor">
+    <visual>
+     <geometry>
+       <mesh filename="package://duckiepond_vehicle/mesh/PROPELLER.dae"/>
+     </geometry>
+    </visual>
+    <collision name="right_motor_collision">
+      <geometry>
+        <mesh filename="package://duckiepond_vehicle/mesh/PROPELLER.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.00086" ixy="0.00" ixz="0.00" iyy="0.00086" iyz="0.00" izz="0.0017"/>
+    </inertial>
+  </link>
+
+  <joint name="right_motor_joint" type="continuous">
+    <origin xyz="-.4 -${motor_position_y} ${motor_position_z}"/>
+    <parent link="base_link"/>
+    <child link="right_motor"/>
+    <limit effort="0.5293" velocity="100${pi}" />
+  </joint>
+
+  <transmission name="right_motor_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_motor_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor_actuator">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>30</mechanicalReduction>
+    </actuator>
+  </transmission> -->
+
+
+  <!-- left motor -->
+  <!-- <link name="left_motor">
+    <visual>
+     <geometry>
+       <mesh filename="package://duckiepond_vehicle/mesh/PROPELLER.dae"/>
+     </geometry>
+    </visual>
+    <collision name="left_motor_collision">
+      <geometry>
+        <mesh filename="package://duckiepond_vehicle/mesh/PROPELLER.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.00086" ixy="0.00" ixz="0.00" iyy="0.00086" iyz="0.00" izz="0.0017"/>
+    </inertial>
+  </link>
+
+  <joint name="left_motor_joint" type="continuous">
+    <origin xyz="-.4 ${motor_position_y} ${motor_position_z}"/>
+    <parent link="base_link"/>
+    <child link="left_motor"/>
+    <limit effort="0.5293" velocity="100${pi}" />
+  </joint>
+
+  <transmission name="left_motor_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_motor_joint">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor_actuator">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>30</mechanicalReduction>
+    </actuator>
+  </transmission> -->
+
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_footprint"/>
+</robot>

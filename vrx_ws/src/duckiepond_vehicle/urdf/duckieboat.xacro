@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="duckieboat">
+    <!-- Defines the base vehicle -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/duckieboat_base.xacro"/>
+
+    <!-- Attach IMU plugin -->  
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_imu_plugin.xacro" />
+    <xacro:usv_imu name="imu" robot_name="$(arg robot_name)">
+        <origin xyz="0.5 0.0 0.5" rpy="0 0 0" />
+    </xacro:usv_imu>
+
+    <!-- Attach p3d odometry plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_p3d_plugin.xacro" />
+    <xacro:usv_p3d name="p3d" robot_name="$(arg robot_name)"/>
+
+    <!-- Attach GPS plugin -->    
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_gps_plugin.xacro" />
+    <xacro:usv_gps name="gps" latitude="24.788808" longitude="121.000188" altitude="2.5" robot_name="$(arg robot_name)">
+        <origin xyz="0.5 0.0 0.8" rpy="0 0 0" />
+    </xacro:usv_gps>
+
+    <!-- Attach hydrodynamics plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_dynamics_plugin.xacro"/>
+    <xacro:usv_dynamics_gazebo name="dynamics" robot_name="$(arg robot_name)"/>
+
+    <!-- Attach thrust plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_thrust_plugin.xacro"/>
+    <xacro:usv_thrust_gazebo name="thrust" robot_name="$(arg robot_name)"/>
+
+    <!-- Attach camera plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_camera_plugin.xacro"/>
+    <xacro:usv_camera name="camera" robot_name="$(arg robot_name)"/>
+
+    <!-- Attach apriltag -->
+    <!--xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_apriltags_plugin.xacro" />
+    <xacro:usv_apriltags name="top_tag" tag_id="$(arg robot_id)" tag2_id="$(arg robot_id2)" tag_size="1.00">
+        <origin xyz="0.5 0 1" rpy="0 1.57 0"/>
+    </xacro:usv_apriltags-->
+</robot>

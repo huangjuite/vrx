@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="duckieboat">
+
+    <xacro:arg name="thruster_namespace" default="thrusters/" />
+    
+    <xacro:property name="thruster_namespace" value="$(arg thruster_namespace)" scope="global" />
+    <xacro:property name="namespace" value="$(arg robot_name)" scope="global" />
+
+    <!-- Defines the base vehicle -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/duckieboat_base_new.xacro" />
+
+    <!-- Attach IMU plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_imu_plugin.xacro" />
+    <xacro:usv_imu name="imu" robot_name="$(arg robot_name)">
+        <origin xyz="0.2 -0.075 0.205" rpy="0 0 0" />
+    </xacro:usv_imu>
+
+    <!-- Attach p3d odometry plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_p3d_plugin.xacro" />
+    <xacro:usv_p3d name="p3d" robot_name="$(arg robot_name)" />
+
+    <!-- Attach GPS plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_gps_plugin.xacro" />
+    <xacro:usv_gps name="gps" latitude="24.788808" longitude="121.000188" altitude="2.5" robot_name="$(arg robot_name)">
+        <origin xyz="-0.22 -0.24 0.42" rpy="0 0 0" />
+    </xacro:usv_gps>
+
+    <!-- Attach hydrodynamics plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_dynamics_plugin.xacro" />
+    <xacro:usv_dynamics_gazebo name="$(arg robot_name)_duckieboat_dynamics" />
+
+    <!-- Attach thrust plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/engine.xacro" />
+    <xacro:engine prefix="left" position="-0.1 0.3 0.3" />
+    <xacro:engine prefix="right" position="-0.1 -0.3 0.3" />
+    <gazebo>
+        <plugin name="gazebo_thrust" filename="libusv_gazebo_thrust_plugin.so">
+            <cmdTimeout>1.0</cmdTimeout>
+            <robotNamespace>${namespace}</robotNamespace>
+            <xacro:include filename="$(find duckiepond_vehicle)/urdf/gazebo_thruster_config.xacro" />
+            <xacro:gazebo_thruster_config name="left" />
+            <xacro:gazebo_thruster_config name="right" />
+        </plugin>
+    </gazebo>
+
+    <!-- Attach camera plugin -->
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_camera_plugin.xacro" />
+    <xacro:usv_camera name="camera" robot_name="$(arg robot_name)" />
+
+</robot>

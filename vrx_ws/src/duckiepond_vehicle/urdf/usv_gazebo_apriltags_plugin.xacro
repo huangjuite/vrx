@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="usv_apriltags" params="*origin name tag_id:=0 tag2_id:=1 tag_size:=0.54">
+  <!--xacro:arg name="tag_id" default="0"/-->
+
+    <link name="tag_link">
+        <visual>
+            <origin
+                xyz="0 0 0.5"
+                rpy="0 0 0" />
+            <geometry>
+                <box size="0.01 ${tag_size} ${tag_size}"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="tag2_link">
+        <visual>
+            <origin
+                xyz="0 0 -0.5"
+                rpy="0 0 0" />
+            <geometry>
+                <box size="0.01 ${tag_size} ${tag_size}"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="tag_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="base_link"/>
+      <child link="tag_link"/>
+    </joint>
+
+    <joint name="tag2_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="base_link"/>
+      <child link="tag2_link"/>
+    </joint>
+
+    <gazebo reference="tag_link">
+        <turnGravityOff>true</turnGravityOff>
+        <material>a_${tag_id}/Image</material>
+    </gazebo> 
+
+    <gazebo reference="tag2_link">
+        <turnGravityOff>true</turnGravityOff>
+        <material>a_${tag2_id}/Image</material>
+    </gazebo> 
+
+  </xacro:macro>
+</robot>

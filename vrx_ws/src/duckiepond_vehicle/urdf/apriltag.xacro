@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="apriltag">
+  <!-- Defines the base vehicle -->
+  <xacro:include filename="$(find duckiepond_vehicle)/urdf/apriltag_base.xacro" />
+  <xacro:apriltag_base name="$(arg robot_name)_apriltag_base_plugin" tag_id="$(arg tag_id)" tag_size="$(arg tag_size)"/>
+
+  <!-- Attach hydrodynamics plugin -->
+  <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_dynamics_plugin.xacro" />
+  <xacro:usv_dynamics_gazebo name="$(arg robot_name)_dynamics_plugin"/>
+
+  <!-- Attach p3d odometry plugin -->
+  <xacro:if value="$(arg p3d)">
+      <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_p3d_plugin.xacro" />
+      <xacro:usv_p3d name="$(arg robot_name)_p3d">
+      </xacro:usv_p3d>
+  </xacro:if> 
+
+
+</robot>

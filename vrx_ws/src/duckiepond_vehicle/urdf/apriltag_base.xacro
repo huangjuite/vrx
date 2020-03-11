@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="apriltag_base" params=" name tag_id:=0 tag_size:=0.8">
+  <xacro:property name="size" value="${tag_size}"/>
+
+  <!-- totem -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0.25" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckiepond_gazebo/models/dock_block_2x2/mesh/dock_block_2x2.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0.25"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://duckiepond_gazebo/models/dock_block_2x2/mesh/dock_block_2x2.dae" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- apriltag_1 -->
+  <link name="apriltag_1">
+    <visual>
+      <origin xyz="0.25 -0.25 0.25" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="0.01 ${size} ${size}"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- joint -->
+  <joint name="totem_to_apriltag_1" type="fixed">
+    <parent link="base_link"/>
+    <child link="apriltag_1"/>
+  </joint>
+
+  <!-- apriltage id -->
+  <gazebo reference="apriltag_1">
+    <turnGravityOff>false</turnGravityOff>
+    <material>a_${tag_id}/Image</material>
+  </gazebo>
+
+  </xacro:macro> 
+
+</robot>
