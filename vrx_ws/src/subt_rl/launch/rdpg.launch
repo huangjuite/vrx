@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+    <arg name="sim" default="False" />
+    <arg name="use_mmwave" default="True" />
+    <arg name="veh" default="husky1" />
+
+
+    <include file="$(find subt_rl)/launch/pcToLaser_240.launch">
+        <arg name="sim" value="$(arg sim)" />
+        <arg name="veh" value="$(arg veh)" />
+    </include>
+
+    <include file="$(find subt_rl)/launch/pcToLaser_mmwave.launch">
+        <arg name="veh" value="$(arg veh)" />
+    </include>
+    
+    <group ns="$(arg veh)">
+        <group if="$(arg use_mmwave)">
+            <node pkg="subt_rl" type="laser_mmwave_process.py" name="mmwave_process" output="screen" />
+        </group>
+
+        <node pkg="subt_rl" type="run_rdpg.py" name="run_rdpg" output="screen">
+            <param name="model" value="subt_rl495.ckpt-1037" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+</launch>

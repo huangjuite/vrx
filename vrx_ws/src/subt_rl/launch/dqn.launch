@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="sim" default="True" />
+    <arg name="model" default="sep23.pb" />
+    <arg name="version" default="0" />
+
+    <include file="$(find subt_rl)/launch/pcToLaser.launch" >
+        <arg name="sim" value="$(arg sim)" />
+    </include>
+
+    <node pkg="subt_rl" type="run_dqn_model.py" name="run_dqn" output="screen">
+        <param name="sim" value="$(arg sim)"/>
+        <param name="version" value="$(arg version)"/>
+        <param name="model" value="$(arg model)" />
+    </node>
+
+</launch>

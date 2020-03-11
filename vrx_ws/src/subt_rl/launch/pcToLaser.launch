@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="sim" default="False" />
+
+    <!-- run pointcloud_to_laserscan node -->
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+
+        <remap unless="$(arg sim)" from="cloud_in" to="/velodyne1/velodyne_points" />
+        <remap if="$(arg sim)" from="cloud_in" to="/X1/points" />
+        <remap from="scan" to="RL/scan" />
+        <rosparam unless="$(arg sim)">
+            target_frame: velodyne1
+        </rosparam>
+        <rosparam if="$(arg sim)">
+            target_frame: X1/front_laser
+        </rosparam>
+        <rosparam>
+            transform_tolerance: 0.01
+            min_height: -0.3
+            max_height: 0.5
+
+            angle_min: -3.14159
+            angle_max: 3.14159
+            angle_increment: 0.017453
+            scan_time: 0.1
+            range_min: 0
+            range_max: 100.0
+            use_inf: False
+
+            # Concurrency level, affects number of pointclouds queued for processing and number of threads used
+            # 0 : Detect number of cores
+            # 1 : Single threaded
+            # 2->inf : Parallelism level
+            concurrency_level: 0
+        </rosparam>
+
+    </node>
+</launch>

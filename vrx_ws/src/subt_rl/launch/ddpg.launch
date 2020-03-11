@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+    <arg name="sim" default="False" />
+    <arg name="use_mmwave" default="False" />
+    <arg name="direction" default="False" />
+
+    <group unless="$(arg direction)">
+        <include file="$(find subt_rl)/launch/pcToLaser_240.launch">
+            <arg name="sim" value="$(arg sim)" />
+        </include>
+        <node pkg="subt_rl" type="run_ddpg.py" name="run_ddpg" output="screen">
+            <param name="model" value="ddpg1214.pb" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+    <group if="$(arg direction)">
+        <include file="$(find subt_rl)/launch/pcToLaser_dense.launch">
+            <arg name="sim" value="$(arg sim)" />
+        </include>
+
+        <node pkg="subt_rl" type="laser_preprocess.py" name="preprocess" output="screen">
+            <param name="use_mmwave" value="$(arg use_mmwave)" />
+        </node>
+
+        <node pkg="subt_rl" type="run_ddpg_direction.py" name="run_ddpg" output="screen">
+            <param name="model" value="ddpg1126.pb" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+
+</launch>

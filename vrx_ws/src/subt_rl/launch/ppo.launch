@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="sim" default="True" />
+    <arg name="model" default="ppo_oct6_2.pb" />
+    <arg name="version" default="0" />
+
+    <include file="$(find subt_rl)/launch/pcToLaser360.launch" >
+        <arg name="sim" value="$(arg sim)" />
+    </include>
+
+    <node pkg="subt_rl" type="run_ppo_model.py" name="run_ppo" output="screen">
+        <param name="sim" value="$(arg sim)"/>
+        <param name="model" value="$(arg model)" />
+    </node>
+
+</launch>
