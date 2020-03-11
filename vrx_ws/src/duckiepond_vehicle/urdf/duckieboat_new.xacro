@@ -44,12 +44,10 @@
     </gazebo>
 
     <!-- Attach LiDAR plugin -->
-    <xacro:if value="$(arg lidar)">
-        <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_lidar_plugin.xacro" />
-        <xacro:usv_HDL32E_lidar parent="base_link" name="velodyne" topic="/$(arg robot_name)/velodyne_points" hz="8" samples="1800" min_range="0" max_range="50.0" min_angle="-3.14" max_angle="3.14" noise="0.01">
-          <origin xyz="0.1 0 0.5" rpy="0 0 -1.57" />
-        </xacro:usv_HDL32E_lidar>
-    </xacro:if>
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_lidar_plugin.xacro" />
+    <xacro:usv_HDL32E_lidar parent="base_link" name="velodyne" topic="/$(arg robot_name)/velodyne_points" hz="8" samples="1800" min_range="0" max_range="50.0" min_angle="-3.14" max_angle="3.14" noise="0.01">
+        <origin xyz="0.1 0 0.5" rpy="0 0 -1.57" />
+    </xacro:usv_HDL32E_lidar>
 
     <!-- Attach camera plugin -->
     <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_camera_plugin.xacro" />
