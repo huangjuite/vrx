@@ -2,7 +2,9 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="duckieboat">
 
     <xacro:arg name="thruster_namespace" default="thrusters/" />
+    <xacro:arg name="sensor_namespace" default="sensors/" />
     
+    <xacro:property name="sensor_namespace" value="$(arg sensor_namespace)" scope="global" />
     <xacro:property name="thruster_namespace" value="$(arg thruster_namespace)" scope="global" />
     <xacro:property name="namespace" value="$(arg robot_name)" scope="global" />
 
@@ -44,10 +46,8 @@
     </gazebo>
 
     <!-- Attach LiDAR plugin -->
-    <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_lidar_plugin.xacro" />
-    <xacro:usv_HDL32E_lidar parent="base_link" name="velodyne" topic="/$(arg robot_name)/velodyne_points" hz="8" samples="1800" min_range="0" max_range="50.0" min_angle="-3.14" max_angle="3.14" noise="0.01">
-        <origin xyz="0.1 0 0.5" rpy="0 0 -1.57" />
-    </xacro:usv_HDL32E_lidar>
+    <xacro:include filename="$(find duckiepond_vehicle)/urdf/lidar.xacro" />
+    <xacro:lidar name="velodyne" type="16_beam"/>
 
     <!-- Attach camera plugin -->
     <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_camera_plugin.xacro" />

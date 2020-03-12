@@ -8,8 +8,6 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   nav_msgs
-  pcl_conversions
-  pcl_ros
   roscpp
   rospy
   sensor_msgs
