@@ -1,0 +1,185 @@
+FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+ENV SHELL=/bin/bash \
+    NB_USER=arg \
+    NB_UID=1000 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8
+
+ENV HOME=/home/${NB_USER}
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
+
+RUN echo "root:root" | chpasswd
+RUN echo "${NB_USER}:arg" | chpasswd
+
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
+    && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
+    locales \
+    cmake \
+    git \
+    build-essential \
+    python-pip \
+    python3-pip \
+    python3-setuptools \
+    wget \
+    sudo \
+    curl \
+    lsb-release \
+    vim \
+    net-tools \
+    dirmngr \
+    gnupg2 \
+    mercurial \
+    libignition-math4-dev \
+    libglib2.0-dev \
+    libcwiid-dev \
+    libusb-dev \
+    libpcap-dev \
+    python-gobject \
+    python-gtk2 \
+    libcanberra-gtk-module \
+    libcanberra-gtk3-module \
+    python3-scipy \
+    libmove-base-msgs-dev \
+    libpcap-dev \    
+    gedit \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
+    && apt-get -o Acquire::ForceIPv4=true install -yq \
+    ros-melodic-desktop-full
+
+RUN rosdep init
+
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -yq dist-upgrade \
+    && apt-get -o Acquire::ForceIPv4=true install -yq --no-install-recommends \
+    python-rosdep \
+    python-rosinstall \
+    python-vcstools \
+    python-catkin-tools \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+
+##################################### PIP ######################################
+
+RUN pip2 install --upgrade pip setuptools
+
+RUN pip2 install  \
+    tensorflow-gpu==1.14.0 \
+    numpy==1.16 \
+    gast==0.2.2 \
+    matplotlib \
+    pandas \
+    pypozyx \
+    requests \
+    torch \
+    torchvision \
+    scikit-image \
+    scikit-learn
+
+
+# install packages
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -o Acquire::ForceIPv4=true install -q -y \
+    ros-melodic-perception \
+    ros-melodic-rgbd-launch \
+    ros-melodic-joystick-drivers \
+    ros-melodic-pointcloud-to-laserscan \
+    ros-melodic-robot-localization \
+    ros-melodic-cartographer-ros \
+    ros-melodic-cartographer-rviz \
+    ros-melodic-spacenav-node \
+    ros-melodic-tf2-sensor-msgs \
+    ros-melodic-geodesy \
+    ros-melodic-serial \
+    ros-melodic-controller-manager \
+    ros-melodic-openslam-gmapping \
+    ros-melodic-twist-mux \
+    ros-melodic-velodyne-simulator \
+    ros-melodic-gazebo-ros \
+    ros-melodic-lms1xx \
+    ros-melodic-rviz-imu-plugin \
+    ros-melodic-interactive-marker-twist-server \
+    ros-melodic-teleop-twist-joy \
+    ros-melodic-ddynamic-reconfigure \
+    ros-melodic-rosserial-arduino \
+    ros-melodic-rosserial \
+    && rm -rf /var/lib/apt/lists/*
+
+####################################### vrx requirements ###########################################
+
+RUN apt-get -o Acquire::ForceIPv4=true update && apt-get -o Acquire::ForceIPv4=true install -q -y \
+    mercurial \
+    git \
+    ruby \
+    libeigen3-dev \
+    gazebo9 \
+    libgazebo9-dev \
+    pkg-config \
+    python \
+    ros-melodic-gazebo-plugins \
+    ros-melodic-gazebo-ros \
+    ros-melodic-hector-gazebo-plugins \
+    ros-melodic-joy \
+    ros-melodic-joy-teleop \
+    ros-melodic-key-teleop \
+    ros-melodic-robot-localization \
+    ros-melodic-robot-state-publisher \
+    ros-melodic-rviz \
+    ros-melodic-ros-base \
+    ros-melodic-teleop-tools \
+    ros-melodic-teleop-twist-keyboard \
+    ros-melodic-velodyne-simulator \
+    ros-melodic-xacro \
+    ros-melodic-rqt \
+    ros-melodic-rqt-common-plugins \
+    protobuf-compiler \
+    && rm -rf /var/lib/apt/lists/*
+
+####################################### procman ###########################################
+
+RUN cd ${HOME} && git clone https://github.com/lcm-proj/lcm \
+    && cd lcm \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && make install
+
+RUN cd ${HOME} && git clone http://github.com/huangjuite/procman \
+    && cd procman \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && make install
+
+
+# setup entrypoint
+COPY ./ros_entrypoint.sh /
+ENV ROS_DISTRO=melodic
+ENTRYPOINT ["/ros_entrypoint.sh"]
+
+RUN chown -R ${NB_USER}:${NB_USER} ${HOME}/
+RUN echo "arg ALL=(ALL)  ALL" > /etc/sudoers
+
+# Support of nvidia-docker 2.0
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
+
+USER arg
+
+RUN rosdep update
+WORKDIR /home/arg
+
