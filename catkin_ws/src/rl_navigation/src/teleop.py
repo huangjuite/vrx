@@ -8,10 +8,14 @@ from sensor_msgs.msg import Joy
 class Teleop(object):
     def __init__(self):
         self.auto = False
-        self.pub_left = rospy.Publisher(
-            "thrusters/left_thrust_cmd", Float32, queue_size=1)
-        self.pub_right = rospy.Publisher(
-            "thrusters/right_thrust_cmd", Float32, queue_size=1)
+        self.pub_left_front = rospy.Publisher(
+            "thrusters/left_front_thrust_cmd", Float32, queue_size=1)
+        self.pub_right_front = rospy.Publisher(
+            "thrusters/right_front_thrust_cmd", Float32, queue_size=1)
+        self.pub_left_rear = rospy.Publisher(
+            "thrusters/left_rear_thrust_cmd", Float32, queue_size=1)
+        self.pub_right_rear = rospy.Publisher(
+            "thrusters/right_rear_thrust_cmd", Float32, queue_size=1)
 
         sub_joy = rospy.Subscriber("joy", Joy, self.cb_joy, queue_size=1)
 
@@ -34,8 +38,11 @@ class Teleop(object):
             rospy.loginfo('go manual')
 
         if not self.auto:
-            self.pub_right.publish(joy_msg.axes[1] + joy_msg.axes[3])
-            self.pub_left.publish(joy_msg.axes[1] - joy_msg.axes[3])
+            self.pub_right_front.publish(joy_msg.axes[1] + joy_msg.axes[3])
+            self.pub_right_rear.publish(joy_msg.axes[1] + joy_msg.axes[3])
+
+            self.pub_left_front.publish(joy_msg.axes[1] - joy_msg.axes[3])
+            self.pub_left_rear.publish(joy_msg.axes[1] - joy_msg.axes[3])
 
 
 if __name__ == "__main__":

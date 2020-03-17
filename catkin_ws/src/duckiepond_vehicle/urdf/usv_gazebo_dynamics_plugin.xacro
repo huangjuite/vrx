@@ -24,7 +24,7 @@
         <nRR>0.0</nRR>
         <!-- General dimensions -->
         <!--<boatArea>2.2</boatArea>-->
-        <hullRadius>0.213</hullRadius>
+        <hullRadius>0.2</hullRadius>
         <boatWidth>0.75</boatWidth>
         <boatLength>1.5</boatLength>
         <!-- Length discretization, AKA, "N" -->

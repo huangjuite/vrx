@@ -13,9 +13,12 @@
       <arg name="extra_gazebo_args" default="" />
       <!-- Start in a default namespace -->
       <arg name="robot_name_1" default="duckie_alpha" />
+      <arg name="robot_name_2" default="duckie_beta" />
 
       <!-- Initial USV location and attitude-->
-      <arg name="x" default="158" />
+      <arg name="x1" default="158" />
+      <arg name="x2" default="162" />
+
       <arg name="y" default="108" />
       <arg name="z" default="0.1" />
       <arg name="P" default="0" />
@@ -45,9 +48,18 @@
       <param name="robot_description_1" command="$(find xacro)/xacro --inorder $(arg urdf) robot_name:=$(arg robot_name_1)" />
 
       <!-- Spawn model in Gazebo, script depending on non_competition_mode -->
-      <node name="spawn_model_1" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x) -y $(arg y) -z $(arg z)
+      <node name="spawn_model_1" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x1) -y $(arg y) -z $(arg z)
       -R $(arg R) -P $(arg P) -Y $(arg Y)
       -urdf -param robot_description_1 -model $(arg robot_name_1)" />
+
+      <!-- robot description 1 -->
+      <arg name="urdf2" default="$(find duckiepond_vehicle)/urdf/duckieboat_new.xacro" />
+      <param name="robot_description_2" command="$(find xacro)/xacro --inorder $(arg urdf) robot_name:=$(arg robot_name_2)" />
+
+      <!-- Spawn model in Gazebo, script depending on non_competition_mode -->
+      <node name="spawn_model_2" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x2) -y $(arg y) -z $(arg z)
+      -R $(arg R) -P $(arg P) -Y $(arg Y)
+      -urdf -param robot_description_2 -model $(arg robot_name_2)" />
 
 
 </launch>

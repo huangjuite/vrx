@@ -3,7 +3,7 @@
 
     <xacro:arg name="thruster_namespace" default="thrusters/" />
     <xacro:arg name="sensor_namespace" default="sensors/" />
-    
+
     <xacro:property name="sensor_namespace" value="$(arg sensor_namespace)" scope="global" />
     <xacro:property name="thruster_namespace" value="$(arg thruster_namespace)" scope="global" />
     <xacro:property name="namespace" value="$(arg robot_name)" scope="global" />
@@ -33,21 +33,25 @@
 
     <!-- Attach thrust plugin -->
     <xacro:include filename="$(find duckiepond_vehicle)/urdf/engine.xacro" />
-    <xacro:engine prefix="left" position="0.5 0.4 0.3" />
-    <xacro:engine prefix="right" position="0.5 -0.4 0.3" />
+    <xacro:engine prefix="left_rear" position="-0.3 0.5 0.25" orientation="0.0 0.0 0.785" />
+    <xacro:engine prefix="right_rear" position="-0.3 -0.5 0.25" orientation="0.0 0.0 -0.785" />
+    <xacro:engine prefix="left_front" position="0.8 0.1  0.25" orientation="0.0 0.0 -0.785" />
+    <xacro:engine prefix="right_front" position="0.8 -0.1 0.25" orientation="0.0 0.0 +0.785" />
     <gazebo>
         <plugin name="gazebo_thrust" filename="libusv_gazebo_thrust_plugin.so">
             <cmdTimeout>1.0</cmdTimeout>
             <robotNamespace>${namespace}</robotNamespace>
             <xacro:include filename="$(find duckiepond_vehicle)/urdf/gazebo_thruster_config.xacro" />
-            <xacro:gazebo_thruster_config name="left" />
-            <xacro:gazebo_thruster_config name="right" />
+            <xacro:gazebo_thruster_config name="left_rear" />
+            <xacro:gazebo_thruster_config name="right_rear" />
+            <xacro:gazebo_thruster_config name="left_front" />
+            <xacro:gazebo_thruster_config name="right_front" />
         </plugin>
     </gazebo>
 
     <!-- Attach LiDAR plugin -->
     <xacro:include filename="$(find duckiepond_vehicle)/urdf/lidar.xacro" />
-    <xacro:lidar name="velodyne" type="16_beam"/>
+    <xacro:lidar name="velodyne" type="16_beam" />
 
     <!-- Attach camera plugin -->
     <xacro:include filename="$(find duckiepond_vehicle)/urdf/usv_gazebo_camera_plugin.xacro" />
