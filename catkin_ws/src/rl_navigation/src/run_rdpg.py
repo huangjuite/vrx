@@ -2,7 +2,7 @@
 import rospy
 import tensorflow as tf
 from sensor_msgs.msg import LaserScan, Joy, Imu
-from subt_msgs.srv import pause, start, stop
+from rl_navigation.srv import pause, start, stop
 from std_msgs.msg import Float32MultiArray, Bool
 from geometry_msgs.msg import Twist
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
@@ -52,9 +52,7 @@ class RunRDPGModel(object):
         self.hidden_state = (np.zeros([1,128]),np.zeros([1,128]))
         ##########  get tensor ##########
 
-        self.action_bound = {'linear': 1.5, 'angular': 0.8} if self.sim else {
-            'linear': 0.35, 'angular': 0.3}
-        self.smooth_vel = 0.35
+        self.action_bound = {'linear': 0.3, 'angular': 0.4}
         self.count = 0
         self.scan = None
         self.goal = 0
@@ -67,9 +65,9 @@ class RunRDPGModel(object):
         start_srv = rospy.Service('RL/start', start, self.start_rl)
         self.sub_estop = rospy.Subscriber('e_stop',Bool,self.cb_estop,queue_size=1)
         self.sub_sc_process = rospy.Subscriber(
-            'RL/process', LaserScan, self.cb_sc, queue_size=1)
-        self.sub_joy = rospy.Subscriber('joy_teleop/joy', Joy, self.cb_joy, queue_size=1)
-        pub_name = 'husky_velocity_controller/cmd_vel'
+            'RL/scan', LaserScan, self.cb_sc, queue_size=1)
+        self.sub_joy = rospy.Subscriber('joy', Joy, self.cb_joy, queue_size=1)
+        pub_name = 'RL/cmd_vel'
         self.pub_twist = rospy.Publisher(pub_name, Twist, queue_size=1)
 
         time.sleep(1)
@@ -173,9 +171,9 @@ class RunRDPGModel(object):
         self.sess.close()
 
     def cb_joy(self, joy_msg):
-        # MODE D
-        start_button = 9 if self.sim else 7
-        back_button = 8 if self.sim else 6
+        # MODE X
+        start_button = 7
+        back_button = 6
         # Start button
         if (joy_msg.buttons[start_button] == 1) and not self.auto:
             self.auto = 1

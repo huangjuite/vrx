@@ -1,6 +1,9 @@
-
 cmd "01_core" {
     exec = "roscore";
+    host = "localhost";
+}
+cmd "04_rl" {
+    exec = "roslaunch rl_navigation rdpg.launch";
     host = "localhost";
 }
 cmd "02_gazebo" {
@@ -9,6 +12,10 @@ cmd "02_gazebo" {
 }
 cmd "03_teleop" {
     exec = "roslaunch rl_navigation teleop.launch";
+    host = "localhost";
+}
+cmd "rviz" {
+    exec = "rviz -d rviz/single_boat.rviz";
     host = "localhost";
 }
 

@@ -2,25 +2,17 @@
 
 <launch>
 
-    <arg name="sim" default="False" />
     <arg name="veh" default="husky1" />
     <!-- run pointcloud_to_laserscan node -->
     <node ns="$(arg veh)" pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
 
-        <remap unless="$(arg sim)" from="cloud_in" to="velodyne1/velodyne_points" />
-        <remap if="$(arg sim)" from="cloud_in" to="/X1/points" />
+        <remap from="cloud_in" to="sensors/lidars/velodyne/points" />
         <remap from="scan" to="RL/scan" />
-        <rosparam unless="$(arg sim)">
-            target_frame: base_link
-            min_height: 0
-            max_height: 1
-        </rosparam>
-        <rosparam if="$(arg sim)">
-            target_frame: X1/front_laser
-            min_height: -0.3
-            max_height: 0.5
-        </rosparam>
+        <param name="target_frame" value="$(arg veh)"/>
         <rosparam>
+            min_height: -1
+            max_height: 1
+
             transform_tolerance: 0.01
             
 

@@ -49,5 +49,7 @@
       -R $(arg R) -P $(arg P) -Y $(arg Y)
       -urdf -param robot_description_1 -model $(arg robot_name_1)" />
 
+      <node pkg="tf" type="static_transform_publisher" name="link1_broadcaster" args="0 0 0.3 0 0 0 1 duckie_alpha duckie_alpha/velodyne_link 100" />
+
 
 </launch>

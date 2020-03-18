@@ -3,11 +3,13 @@
 import rospy
 from std_msgs.msg import Float32
 from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
 
 
 class Teleop(object):
     def __init__(self):
         self.auto = False
+        self.turn_ratiao = 0.2
         self.pub_left_front = rospy.Publisher(
             "thrusters/left_front_thrust_cmd", Float32, queue_size=1)
         self.pub_right_front = rospy.Publisher(
@@ -18,6 +20,21 @@ class Teleop(object):
             "thrusters/right_rear_thrust_cmd", Float32, queue_size=1)
 
         sub_joy = rospy.Subscriber("joy", Joy, self.cb_joy, queue_size=1)
+        sub_cmd = rospy.Subscriber(
+            "RL/cmd_vel", Twist, self.cb_cmd, queue_size=1)
+
+    def cb_cmd(self, msg):
+        if self.auto:
+            print msg.linear.x, msg.angular.z
+            self.pub_right_front.publish(
+                msg.linear.x + msg.angular.z - msg.angular.z*self.turn_ratiao)
+            self.pub_right_rear.publish(
+                msg.linear.x + msg.angular.z + msg.angular.z*self.turn_ratiao)
+
+            self.pub_left_front.publish(
+                msg.linear.x - msg.angular.z + msg.angular.z*self.turn_ratiao)
+            self.pub_left_rear.publish(
+                msg.linear.x - msg.angular.z - msg.angular.z*self.turn_ratiao)
 
     def cb_joy(self, joy_msg):
         # MODE X
@@ -38,11 +55,15 @@ class Teleop(object):
             rospy.loginfo('go manual')
 
         if not self.auto:
-            self.pub_right_front.publish(joy_msg.axes[1] + joy_msg.axes[3])
-            self.pub_right_rear.publish(joy_msg.axes[1] + joy_msg.axes[3])
+            self.pub_right_front.publish(
+                joy_msg.axes[1] + joy_msg.axes[3] - joy_msg.axes[3]*self.turn_ratiao)
+            self.pub_right_rear.publish(
+                joy_msg.axes[1] + joy_msg.axes[3] + joy_msg.axes[3]*self.turn_ratiao)
 
-            self.pub_left_front.publish(joy_msg.axes[1] - joy_msg.axes[3])
-            self.pub_left_rear.publish(joy_msg.axes[1] - joy_msg.axes[3])
+            self.pub_left_front.publish(
+                joy_msg.axes[1] - joy_msg.axes[3] + joy_msg.axes[3]*self.turn_ratiao)
+            self.pub_left_rear.publish(
+                joy_msg.axes[1] - joy_msg.axes[3] - joy_msg.axes[3]*self.turn_ratiao)
 
 
 if __name__ == "__main__":
