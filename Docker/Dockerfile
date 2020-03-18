@@ -53,7 +53,8 @@ RUN pip2 install  \
     torch \
     torchvision \
     scikit-image \
-    scikit-learn
+    scikit-learn \
+    lxml
 
 
 # install packages

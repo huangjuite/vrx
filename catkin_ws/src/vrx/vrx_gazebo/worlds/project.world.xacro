@@ -1,0 +1,528 @@
+<?xml version="1.0" ?>
+<!-- World containing sandisland model and some course challenges -->
+<sdf version="1.6" xmlns:xacro="http://ros.org/wiki/xacro">
+  <world name="robotx_project_course">
+    <xacro:include filename="$(find vrx_gazebo)/worlds/sandisland.xacro" />
+    <xacro:sandisland />
+    <!--Waves-->
+    <xacro:include filename="$(find wave_gazebo)/world_models/ocean_waves/model.xacro" />
+    <xacro:ocean_waves />
+
+    <!-- layout -->
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block00</name>
+      <pose>-42.69 -43.94 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block01</name>
+      <pose>-42.34 -32.31 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block02</name>
+      <pose>-43.75 -24.52 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block03</name>
+      <pose>-44.08 -14.19 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block04</name>
+      <pose>-44.47 -4.93 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block05</name>
+      <pose>-43.31 5.53 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block06</name>
+      <pose>-44.34 15.97 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block07</name>
+      <pose>-43.22 27.74 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block08</name>
+      <pose>-42.86 36.35 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block09</name>
+      <pose>-42.19 47.45 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block10</name>
+      <pose>-34.98 -43.51 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block11</name>
+      <pose>-34.88 -33.16 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block12</name>
+      <pose>-33.63 -24.16 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block13</name>
+      <pose>-33.17 -13.63 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block14</name>
+      <pose>-34.41 -3.36 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block15</name>
+      <pose>-33.87 5.32 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block16</name>
+      <pose>-32.33 15.54 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block17</name>
+      <pose>-33.18 26.63 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block18</name>
+      <pose>-34.90 37.80 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block19</name>
+      <pose>-34.20 45.62 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block20</name>
+      <pose>-23.00 -42.75 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block21</name>
+      <pose>-24.28 -32.82 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block22</name>
+      <pose>-24.12 -22.75 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block23</name>
+      <pose>-22.01 -13.69 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block24</name>
+      <pose>-24.22 -2.54 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block25</name>
+      <pose>-22.67 7.27 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block26</name>
+      <pose>-22.12 16.67 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block27</name>
+      <pose>-23.25 25.86 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block28</name>
+      <pose>-23.78 37.47 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block29</name>
+      <pose>-22.42 45.76 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block30</name>
+      <pose>-13.12 -43.54 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block31</name>
+      <pose>-14.66 -33.42 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block32</name>
+      <pose>-12.84 -23.78 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block33</name>
+      <pose>-14.47 -13.83 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block34</name>
+      <pose>-13.20 -3.42 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block35</name>
+      <pose>-12.12 5.08 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block36</name>
+      <pose>-14.17 17.58 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block37</name>
+      <pose>-12.06 25.18 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block38</name>
+      <pose>-14.05 37.96 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block39</name>
+      <pose>-13.09 46.60 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block40</name>
+      <pose>-4.18 -43.27 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block41</name>
+      <pose>-2.81 -32.95 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block42</name>
+      <pose>-4.10 -23.37 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block43</name>
+      <pose>-4.08 -12.24 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block44</name>
+      <pose>-4.59 -3.15 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block45</name>
+      <pose>-3.57 5.86 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block46</name>
+      <pose>-2.35 16.24 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block47</name>
+      <pose>-4.88 25.04 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block48</name>
+      <pose>-2.67 35.13 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block49</name>
+      <pose>-4.43 47.60 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block50</name>
+      <pose>5.22 -44.19 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block51</name>
+      <pose>7.84 -34.67 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block52</name>
+      <pose>6.23 -22.88 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block53</name>
+      <pose>6.02 -13.24 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block54</name>
+      <pose>5.02 -4.40 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block55</name>
+      <pose>7.71 5.76 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block56</name>
+      <pose>7.06 17.89 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block57</name>
+      <pose>6.51 25.03 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block58</name>
+      <pose>6.03 36.12 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block59</name>
+      <pose>7.40 47.76 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block60</name>
+      <pose>15.40 -44.43 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block61</name>
+      <pose>17.93 -33.77 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block62</name>
+      <pose>17.50 -23.32 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block63</name>
+      <pose>15.39 -14.31 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block64</name>
+      <pose>16.36 -4.60 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block65</name>
+      <pose>16.88 5.70 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block66</name>
+      <pose>15.65 16.74 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block67</name>
+      <pose>17.91 27.71 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block68</name>
+      <pose>17.58 35.16 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block69</name>
+      <pose>17.76 45.97 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block70</name>
+      <pose>25.11 -42.64 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block71</name>
+      <pose>27.09 -32.20 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block72</name>
+      <pose>26.16 -23.81 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block73</name>
+      <pose>27.86 -13.71 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block74</name>
+      <pose>25.35 -4.39 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block75</name>
+      <pose>25.87 7.04 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block76</name>
+      <pose>27.90 15.41 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block77</name>
+      <pose>27.55 25.82 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block78</name>
+      <pose>26.36 37.92 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block79</name>
+      <pose>27.54 47.29 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block80</name>
+      <pose>35.63 -44.94 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block81</name>
+      <pose>35.56 -34.73 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block82</name>
+      <pose>36.34 -24.28 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a5</uri>
+      <name>block83</name>
+      <pose>35.20 -12.97 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block84</name>
+      <pose>35.46 -3.76 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block85</name>
+      <pose>35.53 5.62 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block86</name>
+      <pose>36.30 16.67 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block87</name>
+      <pose>37.32 25.39 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://green_totem</uri>
+      <name>block88</name>
+      <pose>35.17 36.46 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block89</name>
+      <pose>36.11 46.73 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block90</name>
+      <pose>45.63 -44.49 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://blue_totem</uri>
+      <name>block91</name>
+      <pose>45.90 -34.73 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block92</name>
+      <pose>47.88 -22.86 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block93</name>
+      <pose>46.63 -14.68 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://black_totem</uri>
+      <name>block94</name>
+      <pose>47.60 -2.20 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://red_totem</uri>
+      <name>block95</name>
+      <pose>46.26 6.93 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://yellow_totem</uri>
+      <name>block96</name>
+      <pose>46.37 17.09 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a7</uri>
+      <name>block97</name>
+      <pose>46.53 26.64 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block98</name>
+      <pose>46.46 36.90 0.00 0.00 0.00 0.00</pose>
+    </include>
+    <include>
+      <uri>model://polyform_a3</uri>
+      <name>block99</name>
+      <pose>47.08 47.78 0.00 0.00 0.00 0.00</pose>
+    </include>
+    
+    
+
+    <!-- layout -->
+
+    <xacro:include filename="$(find vrx_gazebo)/worlds/xacros/usv_wind_plugin.xacro" />
+    <xacro:usv_wind_gazebo>
+      <wind_objs>
+        <wind_obj>
+          <name>duckie_alpha</name>
+          <link_name>base_link</link_name>
+          <coeff_vector>.5 .5 .33</coeff_vector>
+        </wind_obj>
+      </wind_objs>
+    </xacro:usv_wind_gazebo>
+  </world>
+</sdf>

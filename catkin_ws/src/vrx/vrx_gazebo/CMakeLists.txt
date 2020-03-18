@@ -269,6 +269,7 @@ add_custom_target(dock_erb_generation ALL
 # Generate world files from xacro and install
 xacro_add_files(
   worlds/example_course.world.xacro
+  worlds/project.world.xacro
   worlds/navigation_task.world.xacro
   worlds/perception_task.world.xacro
   worlds/sandisland.world.xacro

@@ -2,7 +2,7 @@
 <launch>
       <env name="ROSCONSOLE_CONFIG_FILE" value="$(find vrx_gazebo)/config/custom_rosconsole.conf" />
       <!-- Gazebo world to load -->
-      <arg name="world" default="$(find vrx_gazebo)/worlds/example_course.world" />
+      <arg name="world" default="$(find vrx_gazebo)/worlds/project.world" />
       <!-- If true, run gazebo GUI -->
       <arg name="gui" default="true" />
       <!-- If true, run gazebo in verbose mode -->
@@ -15,12 +15,12 @@
       <arg name="robot_name_1" default="duckie_alpha" />
 
       <!-- Initial USV location and attitude-->
-      <arg name="x" default="158" />
-      <arg name="y" default="108" />
-      <arg name="z" default="0.1" />
+      <arg name="x" default="0" />
+      <arg name="y" default="0" />
+      <arg name="z" default="0" />
       <arg name="P" default="0" />
       <arg name="R" default="0" />
-      <arg name="Y" default="-2.76" />
+      <arg name="Y" default="0" />
 
       <!-- If true, show non-competition ROS topics (/gazebo/model_states, /vrx/debug/wind/direction, etc.)-->
       <arg name="non_competition_mode" default="true" />
