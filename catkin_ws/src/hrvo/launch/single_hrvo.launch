@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+    <arg name="veh" default="duckie_alpha" />
+
+    <group ns="$(arg veh)">
+        <node pkg="hrvo" type="project_single.py" name="project_single" output="screen" />
+    </group>
+
+</launch>

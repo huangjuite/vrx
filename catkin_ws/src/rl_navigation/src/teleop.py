@@ -21,20 +21,20 @@ class Teleop(object):
 
         sub_joy = rospy.Subscriber("joy", Joy, self.cb_joy, queue_size=1)
         sub_cmd = rospy.Subscriber(
-            "RL/cmd_vel", Twist, self.cb_cmd, queue_size=1)
+            "cmd_vel", Twist, self.cb_cmd, queue_size=1)
 
     def cb_cmd(self, msg):
         if self.auto:
             print msg.linear.x, msg.angular.z
             self.pub_right_front.publish(
-                msg.linear.x + msg.angular.z - msg.angular.z*self.turn_ratiao)
+                msg.linear.x + msg.angular.z)
             self.pub_right_rear.publish(
-                msg.linear.x + msg.angular.z + msg.angular.z*self.turn_ratiao)
+                (msg.linear.x + msg.angular.z)*0.7)
 
             self.pub_left_front.publish(
-                msg.linear.x - msg.angular.z + msg.angular.z*self.turn_ratiao)
+                msg.linear.x - msg.angular.z)
             self.pub_left_rear.publish(
-                msg.linear.x - msg.angular.z - msg.angular.z*self.turn_ratiao)
+                (msg.linear.x - msg.angular.z)*0.7)
 
     def cb_joy(self, joy_msg):
         # MODE X
@@ -56,14 +56,14 @@ class Teleop(object):
 
         if not self.auto:
             self.pub_right_front.publish(
-                joy_msg.axes[1] + joy_msg.axes[3] - joy_msg.axes[3]*self.turn_ratiao)
+                joy_msg.axes[1] + joy_msg.axes[3])
             self.pub_right_rear.publish(
-                joy_msg.axes[1] + joy_msg.axes[3] + joy_msg.axes[3]*self.turn_ratiao)
+                (joy_msg.axes[1] + joy_msg.axes[3])*0.7)
 
             self.pub_left_front.publish(
-                joy_msg.axes[1] - joy_msg.axes[3] + joy_msg.axes[3]*self.turn_ratiao)
+                joy_msg.axes[1] - joy_msg.axes[3])
             self.pub_left_rear.publish(
-                joy_msg.axes[1] - joy_msg.axes[3] - joy_msg.axes[3]*self.turn_ratiao)
+                (joy_msg.axes[1] - joy_msg.axes[3])*0.7)
 
 
 if __name__ == "__main__":
