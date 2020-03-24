@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+    <arg name="sim" default="True" />
+
+    <node pkg="joy" type="joy_node" name="joy_node">
+        <param name="autorepeat_rate" value="20" />
+    </node>
+
+    <include file="$(find rl_navigation)/launch/pcToLaser_240.launch">
+        <arg name="veh" value="boat1" />
+    </include>
+    <group ns="boat1">
+        <node pkg="rl_navigation" type="teleop.py" name="teleop" />
+        <node pkg="rl_navigation" type="run_rdpg.py" name="run_rdpg" output="screen">
+            <param name="model" value="subt_rl495.ckpt-1037" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+    <include file="$(find rl_navigation)/launch/pcToLaser_240.launch">
+        <arg name="veh" value="boat2" />
+    </include>
+    <group ns="boat2">
+        <node pkg="rl_navigation" type="teleop.py" name="teleop" />
+        <node pkg="rl_navigation" type="run_rdpg.py" name="run_rdpg" output="screen">
+            <param name="model" value="subt_rl495.ckpt-1037" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+    <include file="$(find rl_navigation)/launch/pcToLaser_240.launch">
+        <arg name="veh" value="boat3" />
+    </include>
+    <group ns="boat3">
+        <node pkg="rl_navigation" type="teleop.py" name="teleop" />
+        <node pkg="rl_navigation" type="run_rdpg.py" name="run_rdpg" output="screen">
+            <param name="model" value="subt_rl495.ckpt-1037" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+    <include file="$(find rl_navigation)/launch/pcToLaser_240.launch">
+        <arg name="veh" value="boat4" />
+    </include>
+    <group ns="boat4">
+        <node pkg="rl_navigation" type="teleop.py" name="teleop" />
+        <node pkg="rl_navigation" type="run_rdpg.py" name="run_rdpg" output="screen">
+            <param name="model" value="subt_rl495.ckpt-1037" />
+            <param name="sim" value="$(arg sim)" />
+        </node>
+    </group>
+
+
+</launch>

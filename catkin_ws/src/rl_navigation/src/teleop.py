@@ -8,7 +8,7 @@ from geometry_msgs.msg import Twist
 
 class Teleop(object):
     def __init__(self):
-        self.auto = False
+        self.auto = True
         self.turn_ratiao = 0.2
         self.pub_left_front = rospy.Publisher(
             "thrusters/left_front_thrust_cmd", Float32, queue_size=1)
@@ -19,13 +19,12 @@ class Teleop(object):
         self.pub_right_rear = rospy.Publisher(
             "thrusters/right_rear_thrust_cmd", Float32, queue_size=1)
 
-        sub_joy = rospy.Subscriber("joy", Joy, self.cb_joy, queue_size=1)
+        sub_joy = rospy.Subscriber("/joy", Joy, self.cb_joy, queue_size=1)
         sub_cmd = rospy.Subscriber(
             "cmd_vel", Twist, self.cb_cmd, queue_size=1)
 
     def cb_cmd(self, msg):
         if self.auto:
-            print msg.linear.x, msg.angular.z
             self.pub_right_front.publish(
                 msg.linear.x + msg.angular.z)
             self.pub_right_rear.publish(

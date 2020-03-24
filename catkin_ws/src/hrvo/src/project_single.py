@@ -8,11 +8,16 @@ from RVO import RVO_update, reach, compute_V_des, reach
 from PID import PID_control
 from dynamic_reconfigure.server import Server
 from control.cfg import ang_PIDConfig, dis_PIDConfig
+from tf.transformations import quaternion_from_euler, euler_from_quaternion
+
 import math
-import tf
 import pandas as pd
+import pickle as pkl
 import numpy as np
 import os
+import gym_env
+import random
+import time
 
 objs_dict = {
     "red_totem": 0.5,
@@ -44,9 +49,9 @@ class BoatHRVO(object):
         self.angu_pid.SetPoint = 0
 
         # setup publisher
-        self.pub_v1 = rospy.Publisher("cmd_vel", Twist, queue_size=1)
-        self.sub_p3d1 = rospy.Subscriber(
-            "p3d_odom", Odometry, self.cb_boat1_odom, queue_size=1)
+        # self.pub_v1 = rospy.Publisher("cmd_vel", Twist, queue_size=1)
+        # self.sub_p3d1 = rospy.Subscriber(
+        #     "p3d_odom", Odometry, self.cb_boat1_odom, queue_size=1)
 
         # initiallize boat status
         self.boat_odom = Odometry()
@@ -56,9 +61,10 @@ class BoatHRVO(object):
         self.ws_model = dict()
         # robot radius
         self.ws_model['robot_radius'] = 1
-        print
-        data = pd.read_csv(os.path.dirname(__file__) +
-                           "/../../vrx/vrx_gazebo/worlds/block_position.csv")
+
+        print os.path.dirname(__file__)
+        data = pd.read_csv(
+            "/home/developer/vrx/catkin_ws/src/vrx/vrx_gazebo/worlds/block_position.csv")
         objs = []
         for idx, item in data.iterrows():
             objs.append([item['x'], item['y'], objs_dict[item['object']]])
@@ -67,30 +73,69 @@ class BoatHRVO(object):
         # rectangular boundary, format [x,y,width/2,heigth/2]
         self.ws_model['boundary'] = []
 
-        self.position = []
-        self.goal = [[50,50]]
+        self.position = [[0, 0]]
+        self.goal = self.random_goal()
         # print(self.position)
         # print(self.goal)
         self.velocity = [[0, 0]]
         self.v_max = [1]
 
         # timer
-        self.timer = rospy.Timer(rospy.Duration(0.2), self.cb_hrvo)
+        # self.timer = rospy.Timer(rospy.Duration(0.2), self.cb_hrvo)
 
-    def cb_hrvo(self, event):
-        self.update_all()
-        v_des = compute_V_des(self.position, self.goal, self.v_max)
-        self.velocity = RVO_update(
-            self.position, v_des, self.velocity, self.ws_model)
+    def random_goal(self):
+        # random angle
+        alpha = 2 * math.pi * random.random()
+        # random radius
+        r = 50 * math.sqrt(2)
+        # calculating coordinates
+        x = r * math.cos(alpha)
+        y = r * math.sin(alpha)
 
-        dis, angle = self.process_ang_dis(
-            self.velocity[0][0], self.velocity[0][1], self.yaw)
+        return [[x, y]]
 
-        cmd = Twist()
-        cmd.linear.x = dis * 0.3
-        cmd.angular.z = angle * 0.5
+    def start_hrvo(self):
+        env = gym_env.SubtCaveNobackEnv()
 
-        self.pub_v1.publish(cmd)
+        epoch = 0
+        iteration = 60
+        record = np.zeros([iteration, 2])
+
+        for i in range(iteration):
+            start_time = time.time()
+            ep_reward = 0
+            step = 0
+            distance = 0
+            while True:
+
+                v_des = compute_V_des(self.position, self.goal, self.v_max)
+                self.velocity = RVO_update(
+                    self.position, v_des, self.velocity, self.ws_model)
+
+                dis, angle = self.process_ang_dis(
+                    self.velocity[0][0], self.velocity[0][1], self.yaw)
+
+                self.position, self.yaw, out_bound, r, done, info = env.step(
+                    [dis * 0.4, angle * 0.4])
+
+                if out_bound or done:
+                    self.goal = self.random_goal()
+
+                if done or env.total_dis > 600:
+                    record[epoch][0] = env.total_dis
+                    record[epoch][1] = time.time()-start_time
+                    s = env.reset()
+                    break
+            print epoch, record[epoch]
+
+            epoch += 1
+
+        folder = os.getcwd()
+        record_name = 'hrvo.pkl'
+        fileObject = open(folder+"/"+record_name, 'wb')
+
+        pkl.dump(record, fileObject)
+        fileObject.close()
 
     def process_ang_dis(self, vx, vy, yaw):
         dest_yaw = math.atan2(vy, vx)
@@ -101,16 +146,17 @@ class BoatHRVO(object):
 
         if angle < -np.pi:
             angle = angle+2*np.pi
-        
+
         angle = angle/np.pi
 
         dis = math.sqrt(vx**2+vy**2)
 
-        
-        print "dest_yaw %2.2f" % dest_yaw
-        print "yaw      %2.2f" % yaw
-        print "angle    %2.2f" % angle
-        print "dis      %2.2f\n" % dis
+        # print "pos      %2.2f, %2.2f" % (self.position[0][0], self.position[0][1])
+        # print "goal     %2.2f, %2.2f" % (self.goal[0][0], self.goal[0][1])
+        # print "dest_yaw %2.2f" % dest_yaw
+        # print "yaw      %2.2f" % yaw
+        # print "angle    %2.2f" % angle
+        # print "dis      %2.2f\n" % dis
 
         dis = max(min(dis, 1), -1)
         angle = max(min(angle, 1), -1)
@@ -161,4 +207,5 @@ class BoatHRVO(object):
 if __name__ == "__main__":
     rospy.init_node("BoatHRVO")
     boatHRVO = BoatHRVO()
+    boatHRVO.start_hrvo()
     rospy.spin()

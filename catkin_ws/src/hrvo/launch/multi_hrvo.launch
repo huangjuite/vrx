@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+    <node pkg="hrvo" type="demo_node.py" name="project_multi" output="screen" />
+    <node pkg="joy" type="joy_node" name="joy_node">
+        <param name="autorepeat_rate" value="20" />
+    </node>
+
+    <node ns="boat1" pkg="rl_navigation" type="teleop.py" name="teleop1" output="screen" />
+    <node ns="boat2" pkg="rl_navigation" type="teleop.py" name="teleop2" output="screen" />
+    <node ns="boat3" pkg="rl_navigation" type="teleop.py" name="teleop3" output="screen" />
+    <node ns="boat4" pkg="rl_navigation" type="teleop.py" name="teleop4" output="screen" />
+    
+
+</launch>

@@ -66,8 +66,8 @@ class RunRDPGModel(object):
         self.sub_estop = rospy.Subscriber('e_stop',Bool,self.cb_estop,queue_size=1)
         self.sub_sc_process = rospy.Subscriber(
             'RL/scan', LaserScan, self.cb_sc, queue_size=1)
-        self.sub_joy = rospy.Subscriber('joy', Joy, self.cb_joy, queue_size=1)
-        pub_name = 'RL/cmd_vel'
+        self.sub_joy = rospy.Subscriber('/joy', Joy, self.cb_joy, queue_size=1)
+        pub_name = 'cmd_vel'
         self.pub_twist = rospy.Publisher(pub_name, Twist, queue_size=1)
 
         time.sleep(1)

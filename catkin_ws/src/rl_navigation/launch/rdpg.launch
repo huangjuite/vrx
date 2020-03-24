@@ -6,10 +6,6 @@
     <arg name="veh" default="duckie_alpha" />
 
 
-    <include file="$(find rl_navigation)/launch/pcToLaser_240.launch">
-        <arg name="veh" value="$(arg veh)" />
-    </include>
-
     <group ns="$(arg veh)">
         <node pkg="rl_navigation" type="run_rdpg.py" name="run_rdpg" output="screen">
             <param name="model" value="subt_rl495.ckpt-1037" />

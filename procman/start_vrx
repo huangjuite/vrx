@@ -10,22 +10,39 @@ cmd "rviz" {
     exec = "rviz -d rviz/single_boat.rviz";
     host = "localhost";
 }
-cmd "02_gazebo" {
+cmd "02_gazebo_single" {
     exec = "roslaunch vrx_gazebo duckieboat.launch";
     host = "localhost";
 }
-cmd "05_hrvo" {
+cmd "02_gazebo_multi" {
+    exec = "roslaunch vrx_gazebo duckieboat_multi.launch";
+    host = "localhost";
+}
+cmd "06_single_hrvo" {
     exec = "roslaunch hrvo single_hrvo.launch";
+    host = "localhost";
+}
+cmd "05_pc2Laser" {
+    exec = "roslaunch rl_navigation pcToLaser_240.launch veh:=duckie_alpha";
+    host = "localhost";
+}
+cmd "04_rl_multi" {
+    exec = "roslaunch rl_navigation rdpg_multi.launch";
+    host = "localhost";
+}
+cmd "04_rl_state" {
+    exec = "rosrun rl_navigation check_multi_state.py";
     host = "localhost";
 }
 cmd "04_rl" {
     exec = "roslaunch rl_navigation rdpg.launch";
     host = "localhost";
 }
+cmd "06_multi_hrvo" {
+    exec = "roslaunch hrvo multi_hrvo.launch";
+    host = "localhost";
+}
 
 script "start_vrx" {
     start cmd "01_core" wait "running";
-    wait ms 1500;
-    start cmd "02_gazebo" wait "running";
-    start cmd "03_teleop" wait "running";
 }
