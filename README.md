@@ -100,7 +100,7 @@ click gif to watch full video
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=G8S00fxOxpc"> 
-        <img src="https://j.gifs.com/NLR4Ov.gif" width="640">
+        <img src="https://github.com/huangjuite/vrx/demo.gif" width="640">
     </a>
 </p>
 
